@@ -4,7 +4,7 @@
 using namespace std;
 
 int main() {
-  string customerArray[5] = {"Christian", "Christ", "Xtian", "Chan", "Xian"};
+  string customerArray[5] = {"Christian", "Chris", "Xtian", "Chan", "Xian"};
   string menuArray[4][2] = {
     { "Spaghetti", "60.00" },
     { "Burger", "50.00" },
@@ -54,7 +54,7 @@ int main() {
       cout << endl << "Qty: ";
       cin >> qty;
 
-      if (order < 4){
+      if (order < 4 && order >= 0){
           string item = menuArray[order][0];
           float price = stof(menuArray[order][1]);
 
