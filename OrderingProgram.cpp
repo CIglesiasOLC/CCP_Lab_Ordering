@@ -3,15 +3,41 @@
 #include <sstream>
 using namespace std;
 
-int main() {
-  string customerArray[5] = {"Christian", "Chris", "Xtian", "Chan", "Xian"};
-  string menuArray[4][2] = {
-    { "Spaghetti", "60.00" },
-    { "Burger", "50.00" },
-    { "Fries", "35.00" },
-    { "Drinks", "25.00" }
-  };
+string customerArray[5] = {"Christian", "Chris", "Xtian", "Chan", "Xian"};
+string menuArray[4][2] = {
+  { "Spaghetti", "60.00" },
+  { "Burger", "50.00" },
+  { "Fries", "35.00" },
+  { "Drinks", "25.00" }
+};
 
+bool validCustomer(string customer) {
+  bool validCustomer = false;
+  for (int i = 0; i < 5; i++) {
+    if (customerArray[i] == customer) {
+      validCustomer = true;
+    }
+  }
+
+  return validCustomer;
+}
+
+void printMenu() {
+  for (int i = 0; i < 4; i++) {
+    cout << to_string(i) << " - " << menuArray[i][0] << " (" << menuArray[i][1] << ")" << endl;
+  }
+}
+
+string getItem(int order){
+  return menuArray[order][0];
+}
+
+float getPrice(int order){
+  return stof(menuArray[order][1]);
+}
+
+
+int main() {
   string customer = "";
   string orderList = "";
   float total = 0;
@@ -21,23 +47,14 @@ int main() {
   cout << "Enter Customer Name: ";
   cin >> customer;
 
-  bool validCustomer = false;
-  for (int i = 0; i < 5; i++) {
-    if (customerArray[i] == customer) {
-      validCustomer = true;
-    }
-  }
-
-  if (!validCustomer) {
+  if (!validCustomer(customer)) {
     cout << endl << "Invalid Customer!";
     return 0;
   }
 
   cout << endl << "Welcome, " << customer << "!";
   cout << endl << "MENU" << endl;
-  for (int i = 0; i < 4; i++) {
-    cout << to_string(i) << " - " << menuArray[i][0] << " (" << menuArray[i][1] << ")" << endl;
-  }
+  printMenu();
   
   char addOrder = 'N';
   do {
@@ -55,13 +72,13 @@ int main() {
       cin >> qty;
 
       if (order < 4 && order >= 0){
-          string item = menuArray[order][0];
-          float price = stof(menuArray[order][1]);
+          string item = getItem(order);
+          float price = getPrice(order);
 
           itemTotal = price * qty;
           orderTxt = item + " - " + to_string(price) + " x " + to_string(qty) + " = " + to_string(itemTotal) + "\n";
       
-          orderList = orderList + orderTxt; //Must Try! Implement an array for order List.
+          orderList = orderList + orderTxt;
           total = total + itemTotal;
       }
       else {
